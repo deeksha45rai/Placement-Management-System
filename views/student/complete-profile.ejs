@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title><%=title%></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../static/style/student/complete-profile/style.css">
+    <link rel="stylesheet" href="../../static/style/nav.css">
+    <link rel="stylesheet" href="../../static/style/popup.css">
+    <script src="../../static/script/student/complete-profile/script.js"></script>
+    <script src="../../static/script/popup.js"></script>
+  </head>
+  <body>
+    <video muted autoplay loop poster="../../static/videos/student-new.png" class="bg">
+      <source src="../../static/videos/student-new.mp4" type="video/mp4">
+    </video>
+    <!--Navigation Bar Start-->
+      <%- include("../partials/nav.ejs",{
+        isLoggedIn,
+        type,
+        color:"#FFFFFF"
+      }); %>
+    <!--Navigation Bar End-->
+    <div class="container">
+      <div class="wrapper">
+        <div class="top">
+          <div class="progress">
+            <div class="pro">
+              <%
+                var cls;
+                var tabs=12,i;
+                for(i=1;i<=tabs;i++)
+                {
+                  cls=(i==1 && verified)?"active-box no-visit":"";
+                  %>
+                    <a href="#box-<%-i%>" class="<%-cls%>"><%-i%><span></span></a>
+                  <%
+                }
+              %>
+              <a href="#box-<%-i%>" class="invisible" onclick="event.preventDefault();return false;"></a>
+            </div>
+          </div>
+        </div>
+        <form class="main" method="POST" action="" enctype="multipart/form-data" id="form">
+          <div class="box<%-verified?" hidden":""%>">
+            <a class="a-box" id="box-1"></a>
+            <div class="fit">
+              <div class="info">
+                <div class="cen">
+                  <div class="timers" data-start="<%-otpgenerated%>">
+                    <svg class="timer minute-timer" viewbox="0 0 100 100">
+                      <defs>
+                        <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" style="stop-color:#29B6F6;stop-opacity:1" />
+                          <stop offset="100%" style="stop-color:#0D47A1;stop-opacity:1" />
+                        </linearGradient>
+                      </defs>
+                      <circle cx="50" cy="50" r="45" fill="url(#grad)" stroke="rgba(26,35,126,0.5)" stroke-weight="1"/>
+                      <path id="svg_minute_path" fill="none" stroke-linecap="round" stroke-width="8" stroke="#FFFFFF" stroke-dasharray="0,220" d="M50 15 a 35 35 0 0 1 0 70 a 35 35 0 0 1 0 -70"/>
+                      <text id="svg_minute_text" x="50" y="50" text-anchor="middle" font-family="Roboto,sans-serif" dy="7" font-size="21" fill="#FFFFFF"><%-timeout%> m</text>
+                    </svg>
+                    <svg class="timer second-timer" viewbox="0 0 100 100">
+                      <defs>
+                        <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" style="stop-color:#29B6F6;stop-opacity:1" />
+                          <stop offset="100%" style="stop-color:#0D47A1;stop-opacity:1" />
+                        </linearGradient>
+                      </defs>
+                      <circle cx="50" cy="50" r="45" fill="url(#grad)" stroke="rgba(26,35,126,0.5)" stroke-weight="1"/>
+                      <path id="svg_second_path" fill="none" stroke-linecap="round" stroke-width="8" stroke="#FFFFFF" stroke-dasharray="0,220" d="M50 15 a 35 35 0 0 1 0 70 a 35 35 0 0 1 0 -70"/>
+                      <text id="svg_second_text" x="50" y="50" text-anchor="middle" font-family="Roboto,sans-serif" dy="7" font-size="21" fill="#FFFFFF">0 s</text>
+                    </svg>
+                  </div>
+                  <div class="text">An OTP have been sent to your E-Mail ID. Check your E-Mail and enter the OTP to verify that the E-Mail ID you have entered is valid and belongs to you.</div>
+                  <button type="button" class="b-yellow resend">Resend</button>
+                </div>
+              </div>
+              <div class="tab" id="first-tab">
+                <div class="row">
+                  <div class="title">Verify Account</div>
+                </div>
+                <div class="otp-container">
+                  <%
+                    for(let i=0;i<6;i++)
+                    {
+                      %>
+                        <input type="text" maxlength="1" id="otp-<%-(i+1)%>" autocomplete="off">
+                      <%
+                    }
+                  %>
+                </div>
+                <div class="message" id="message-box-1"></div>
+                <div class="row">
+                  <button type="button" class="b-red" onclick="clearOtpText();">Clear</button>
+                  <button type="button" class="b-blue" id="verify-otp">Verify</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="box">
+            <a class="a-box" id="box-2"></a>
+            <div class="fit">
+              <div class="info">
+                <div class="cen">
+                  <div class="image">
+                    <div class="preview">
+                      <svg id="alt-profile-pic" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                      <img class="real-preview" onclick="selectFile('profilepic');"></img>
+                    </div>
+                  </div>
+                  <div class="text">Set up your profile by adding basic details. Note: These details will be visible publically</div>
+                </div>
+              </div>
+              <div class="tab">
+                <div class="row">
+                  <div class="title">Profile</div>
+                </div>
+                <div class="row">
+                  <input type="text" name="name" placeholder="Name" id="name" autocomplete="off">
+                </div>
+                <div class="row">
+                  <textarea name="about" placeholder="About you" maxlength="200" id="about"></textarea>
+                </div>
+                <div class="row">
+                  <input type="file" name="profilepic" accept="image/*" id="profilepic" onchange="selectedProfilePic(this);">
+                  <div class="file" id="view-profilepic">
+                    <div class="desc">Profile Picture</div>
+                    <div class="button" onclick="selectFile('profilepic');" tabindex="1">Select</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="message" id="message-box-2"></div>
+                </div>
+                <div class="row">
+                  <button type="button" class="b-green" onclick="toThirdPage();" id="box-2-next">Next</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="box">
+            <a class="a-box" id="box-3"></a>
+            <div class="fit">
+              <div class="info">
+                <div class="cen">
+                  <div class="image">
+                    <div class="preview">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    </div>
+                  </div>
+                  <div class="text">Complete Profile by adding some basic details for contact.</div>
+                </div>
+              </div>
+              <div class="tab">
+                <div class="row">
+                  <div class="title">Personal</div>
+                </div>
+                <div class="row">
+                  <input type="tel" name="phone" placeholder="Phone Number" id="phone" maxlength="10">
+                </div>
+                <div class="row gray">
+                  <div class="input">
+                    <input type="radio" name="gender" value="male" id="gender-male">
+                    <label for="gender-male">Male</label>
+                  </div>
+                  <div class="input">
+                    <input type="radio" name="gender" value="female" id="gender-female">
+                    <label for="gender-female">Female</label>
+                  </div>
+                  <div class="input">
+                    <input type="radio" name="gender" value="other" id="gender-other">
+                    <label for="gender-other">Other</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <label for="dob" class="label-max">Date of Birth</label>
+                  <input type="date" name="dob" id="dob">
+                </div>
+                <div class="row">
+                  <div class="message" id="message-box-3"></div>
+                </div>
+                <div class="row">
+                  <button type="button" class="b-green" onclick="toFourthPage();" id="box-3-next">Next</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="box">
+            <a class="a-box" id="box-4"></a>
+            <div class="fit">
+              <div class="info">
+                <div class="cen">
+                  <div class="image">
+                    <div class="preview">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                    </div>
+                  </div>
+                  <div class="text">Complete Profile by adding some details of current College details.</div>
+                </div>
+              </div>
+              <div class="tab">
+                <div class="row">
+                  <div class="title">Admission</div>
+                </div>
+                <div class="row">
+                  <input type="text" name="admnumber" placeholder="Admission Number" id="admnumber">
+                </div>
+                <div class="row">
+                  <select name="admtype" id="admtype" onchange="this.blur();">
+                    <option disabled selected value> -- Admission Type -- </option>
+                    <option value="regular">Regular</option>
+                    <option value="part time">Part Time</option>
+                    <option value="lateral">Lateral</option>
+                    <option value="transfered">Transferred</option>
+                  </select>
+                </div>
+                <div class="row">
+                  <input type="number" name="admyear" placeholder="Admission Year" id="admyear">
+                </div>
+                <div class="row">
+                  <input type="file" name="idcard" accept=".pdf" id="idcard" onchange="selectedImageOrPdf(this,'view-idcard',4);">
+                  <div class="file" id="view-idcard">
+                    <div class="desc">ID Card</div>
+                    <div class="button" onclick="selectFile('idcard');" tabindex="1">Select</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="message" id="message-box-4"></div>
+                </div>
+                <div class="row">
+                  <button type="button" class="b-green" onclick="toFifthPage();" id="box-4-next">Next</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="box">
+            <a class="a-box" id="box-5"></a>
+            <div class="fit">
+              <div class="info">
+                <div class="cen">
+                  <div class="image">
+                    <div class="preview">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                    </div>
+                  </div>
+                  <div class="text">Complete Profile by adding some details of current College details. Previously cleared Arrears are not to be considered as Active Arrears</div>
+                </div>
+              </div>
+              <div class="tab">
+                <div class="row">
+                  <div class="title">Course</div>
+                </div>
+                <div class="row">
+                  <select name="course" id="course" onchange="setUpSemester();this.blur();">
+                    <option disabled selected value> -- Current Course -- </option>
+                  </select>
+                </div>
+                <div class="row">
+                  <select name="semester" id="semester" onchange="this.blur();">
+                    <option disabled selected value> -- Current Semester -- </option>
+                  </select>
+                </div>
+                <div class="row">
+                  <input type="number" name="arrears" id="arrears" placeholder="Active Arrears" min=0>
+                </div>
+                <div class="row">
+                  <label for="passout" class="label-max">Passout month & year</label>
+                  <input type="month" name="passout" id="passout">
+                </div>
+                <div class="row">
+                  <div class="message" id="message-box-5"></div>
+                </div>
+                <div class="row">
+                  <button type="button" class="b-green" onclick="toSixthPage();" id="box-5-next">Next</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="box">
+            <a class="a-box" id="box-6"></a>
+            <div class="fit">
+              <div class="info">
+                <div class="cen">
+                  <div class="image">
+                    <div class="preview">
+                      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                    </div>
+                  </div>
+                  <div class="text">Complete Profile by adding SSLC details.</div>
+                </div>
+              </div>
+              <div class="tab">
+                <div class="row">
+                  <div class="title">SSLC</div>
+                </div>
+                <div class="row">
+                  <select name="sslcboard" id="sslcboard" onchange="this.blur();">
+                    <option disabled selected value> -- Select Board -- </option>
+                    <option value="state" value="state">State</option>
+                    <option value="cbse" value="cbse">CBSE</option>
+                    <option value="icse" value="icse">ICSE</option>
+                  </select>
+                </div>
+                <div class="row">
+                  <input type="text" name="sslcschool" id="sslcschool" placeholder="School">
+                </div>
+                <div class="row">
+                  <input type="number" step="0.01" name="sslcpercent" id="sslcpercent" placeholder="Marks - Percentage (%)">
+                </div>
+                <div class="row">
+                  <label for="sslcpassdate" class="label-max">Passout Date</label>
+                  <input type="month" name="sslcpassdate" id="sslcpassdate">
+                </div>
+                <div class="row">
+                  <input type="file" name="sslccertificate" accept=".pdf" id="sslccertificate" onchange="selectedImageOrPdf(this,'view-sslccertificate',6);">
+                  <div class="file" id="view-sslccertificate">
+                    <div class="desc">Certificate</div>
+                    <div class="button" onclick="selectFile('sslccertificate');" tabindex="1">Select</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="message" id="message-box-6"></div>
+                </div>
+                <div class="row">
+                  <button type="button" class="b-green" onclick="toSeventhPage();" id="box-6-next">Next</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="box">
+            <a class="a-box" id="box-7"></a>
+            <div class="fit">
+              <div class="info">
+                <div class="cen">
+                  <div class="image">
+                    <div class="preview">
+                      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                    </div>
+                  </div>
+                  <div class="text">Complete Profile by adding Plus Two details.</div>
+                </div>
+              </div>
+              <div class="tab">
+                <div class="row">
+                  <div class="title">Plus Two</div>
+                </div>
+                <div class="row">
+                  <select name="plustwoboard" id="plustwoboard" onchange="this.blur();">
+                    <option disabled selected value> -- Select Board -- </option>
+                    <option value="state" value="state">State</option>
+                    <option value="cbse" value="cbse">CBSE</option>
+                    <option value="icse" value="icse">ICSE</option>
+                  </select>
+                </div>
+                <div class="row">
+                  <input type="text" name="plustwoschool" id="plustwoschool" placeholder="School">
+                </div>
+                <div class="row">
+                  <input type="number" step="0.01" name="plustwopercent" id="plustwopercent" placeholder="Marks - Percentage (%)">
+                </div>
+                <div class="row">
+                  <label for="plustwopassdate" class="label-max">Passout Date</label>
+                  <input type="month" name="plustwopassdate" id="plustwopassdate">
+                </div>
+                <div class="row">
+                  <input type="file" name="plustwocertificate" accept=".pdf" id="plustwocertificate" onchange="selectedImageOrPdf(this,'view-plustwocertificate',7);">
+                  <div class="file" id="view-plustwocertificate">
+                    <div class="desc">Certificate</div>
+                    <div class="button" onclick="selectFile('plustwocertificate');" tabindex="1">Select</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="message" id="message-box-7"></div>
+                </div>
+                <div class="row">
+                  <button type="button" class="b-green" onclick="toEightthPage();" id="box-7-next">Next</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="box">
+            <a class="a-box" id="box-8"></a>
+            <div class="fit">
+              <div class="info">
+                <div class="cen">
+                  <div class="image">
+                    <div class="preview">
+                      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                    </div>
+                  </div>
+                  <div class="text">You can add multiple ones in this section. Add atleast one qualification. You should also add your current course details. Not certified yet ? upload marklist.</div>
+                </div>
+              </div>
+              <div class="tab">
+                <div class="row">
+                  <div class="title">Course</div>
+                </div>
+                <div class="multiple-wrapper" id="multiple-course-wrapper">
+                  <div class="mf-move mf-move-left mf-move-disabled" id="mf-arrow-left-course" onclick="multiFormMove('course','left');"></div>
+                  <div class="mf-move mf-move-right mf-move-disabled" id="mf-arrow-right-course" onclick="multiFormMove('course','right');"></div>
+                  <script>
+                    function getMultipleCourseForm(n)
+                    {
+                      var wrapper=document.createElement("div");
+                      wrapper.innerHTML=`
+                        <div class="multiple multiple-course multiple-active" id="multiple-course-${n}" data-multiple="${n}">
+                          <div class="closer" onclick="closeMultipleForm(this,'course',8,false);">&#10006;</div>
+                          <div class="row">
+                            <select name="coursetype-${n}" id="coursetype-${n}" onchange="this.blur();">
+                              <option disabled selected value> -- Course Type -- </option>
+                              <option value="ug">UG</option>
+                              <option value="pg">PG</option>
+                              <option value="diploma">Diploma</option>
+                            </select>
+                          </div>
+                          <div class="row">
+                            <input type="text" name="coursename-${n}" id="coursename-${n}" placeholder="Course">
+                          </div>
+                          <div class="row">
+                            <input type="text" name="coursecollege-${n}" id="coursecollege-${n}" placeholder="College">
+                          </div>
+                          <div class="row">
+                            <input type="number" step="0.01" name="coursecgpa-${n}" id="coursecgpa-${n}" placeholder="Marks - CGPA">
+                          </div>
+                          <div class="row">
+                            <label for="coursepassdate" class="label-max">Passout Date</label>
+                            <input type="month" name="coursepassdate-${n}" id="coursepassdate-${n}">
+                          </div>
+                          <div class="row">
+                            <input type="file" name="coursecertificate-${n}" accept=".pdf" id="coursecertificate-${n}" onchange="selectedImageOrPdf(this,'view-coursecertificate-${n}',8);">
+                            <div class="file" id="view-coursecertificate-${n}">
+                              <div class="desc">Certificate</div>
+                              <div class="button" onclick="selectFile('coursecertificate-${n}');" tabindex="1">Select</div>
+                            </div>
+                          </div>
+                        </div>
+                      `;
+                      return wrapper.children[0];
+                    }
+                  </script>
+                </div>
+                <div class="row">
+                  <div class="message" id="message-box-8"></div>
+                </div>
+                <div class="row">
+                  <button type="button" class="b-yellow b-skinny b-thin add-another" onclick="addAnotherForm(this,'course');" data-multiple="0" id="course-adder"> Another</button>
+                  <button type="button" class="b-green b-medium" onclick="toNinethPage();" id="box-8-next">Next</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="box">
+            <a class="a-box" id="box-9"></a>
+            <div class="fit">
+              <div class="info">
+                <div class="cen">
+                  <div class="image">
+                    <div class="preview">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                    </div>
+                  </div>
+                  <div class="text">Complete Profile by adding Project Details, Internships and Work Experience (All are Optional)</div>
+                </div>
+              </div>
+              <div class="tab">
+                <div class="row">
+                  <div class="title">Experience</div>
+                </div>
+                <div class="multiple-wrapper" id="multiple-experience-wrapper">
+                  <div class="mf-move mf-move-left mf-move-disabled" id="mf-arrow-left-experience" onclick="multiFormMove('experience','left');"></div>
+                  <div class="mf-move mf-move-right mf-move-disabled" id="mf-arrow-right-experience" onclick="multiFormMove('experience','right');"></div>
+                  <script>
+                    function getMultipleExperienceForm(n)
+                    {
+                      var wrapper=document.createElement("div");
+                      wrapper.innerHTML=`
+                        <div class="multiple multiple-experience multiple-active" id="multiple-experience-${n}" data-multiple="${n}">
+                          <div class="closer" onclick="closeMultipleForm(this,'experience',9,true);">&#10006;</div>
+                          <div class="row">
+                            <select name="experiencetype-${n}" id="experiencetype-${n}" onchange="this.blur();">
+                              <option selected value> -- Experience Type -- </option>
+                              <option value="project">Project</option>
+                              <option value="internship">Internship</option>
+                              <option value="work">Work Experience</option>
+                            </select>
+                          </div>
+                          <div class="row">
+                            <input type="text" name="experiencetitle-${n}" id="experiencetitle-${n}" placeholder="Title">
+                          </div>
+                          <div class="row">
+                            <input type="text" name="experiencedescription-${n}" id="experiencedescription-${n}" placeholder="Description">
+                          </div>
+                          <div class="row">
+                            <label for="experiencefrom-${n}" id="experience-from-label-${n}" class="label-max">Start date</label>
+                            <input type="month" name="experiencefrom-${n}" id="experiencefrom-${n}">
+                          </div>
+                          <div class="row">
+                            <label for="experienceto-${n}" id="experience-to-label-${n}" class="label-max">End date</label>
+                            <input type="month" name="experienceto-${n}" id="experienceto-${n}">
+                          </div>
+                          <div class="row">
+                            <input type="file" name="experiencecertificate-${n}" accept=".pdf" id="experiencecertificate-${n}" onchange="selectedImageOrPdf(this,'view-experiencecertificate-${n}',9);">
+                            <div class="file" id="view-experiencecertificate-${n}">
+                              <div class="desc">Certificate</div>
+                              <div class="button" onclick="selectFile('experiencecertificate-${n}');" tabindex="1">Select</div>
+                            </div>
+                          </div>
+                        </div>
+                      `;
+                      return wrapper.children[0];
+                    }
+                  </script>
+                </div>
+                <div class="row">
+                  <div class="message" id="message-box-9"></div>
+                </div>
+                <div class="row">
+                  <button type="button" class="b-yellow b-skinny b-thin add-another" onclick="addAnotherForm(this,'experience');" data-multiple="0" id="experience-adder"> Another</button>
+                  <button type="button" class="b-green b-medium" onclick="toTenthPage();" id="box-9-next">Next</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="box">
+            <a class="a-box" id="box-10"></a>
+            <div class="fit">
+              <div class="info">
+                <div class="cen">
+                  <div class="image">
+                    <div class="preview">
+                      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                    </div>
+                  </div>
+                  <div class="text">Complete Profile by adding your achievements (All are Optional)</div>
+                </div>
+              </div>
+              <div class="tab">
+                <div class="row">
+                  <div class="title">Achievement</div>
+                </div>
+                <div class="multiple-wrapper" id="multiple-achievement-wrapper">
+                  <div class="mf-move mf-move-left mf-move-disabled" id="mf-arrow-left-achievement" onclick="multiFormMove('achievement','left');"></div>
+                  <div class="mf-move mf-move-right mf-move-disabled" id="mf-arrow-right-achievement" onclick="multiFormMove('achievement','right');"></div>
+                  <script>
+                    function getMultipleAchievementForm(n)
+                    {
+                      var wrapper=document.createElement("div");
+                      wrapper.innerHTML=`
+                        <div class="multiple multiple-achievement multiple-active" id="multiple-achievement-${n}" data-multiple="${n}">
+                          <div class="closer" onclick="closeMultipleForm(this,'achievement',10,true);">&#10006;</div>
+                          <div class="row">
+                            <select name="achievementtype-${n}" id="achievementtype-${n}" onchange="this.blur();">
+                              <option selected value> -- Achievement Type -- </option>
+                              <option value="organized">Organized</option>
+                              <option value="participated">Participated</option>
+                              <option value="volunteered">Volunteered</option>
+                              <option value="achievement">Achievement</option>
+                              <option value="publication">Publication</option>
+                              <option value="certification">Certification</option>
+                            </select>
+                          </div>
+                          <div class="row">
+                            <input type="text" name="achievementtitle-${n}" id="achievementtitle-${n}" placeholder="Title">
+                          </div>
+                          <div class="row">
+                            <input type="text" name="achievementdescription-${n}" id="achievementdescription-${n}" placeholder="Description">
+                          </div>
+                          <div class="row">
+                            <label for="achievementfrom-${n}" id="achievement-from-label-${n}" class="label-max">Start date</label>
+                            <input type="month" name="achievementfrom-${n}" id="achievementfrom-${n}">
+                          </div>
+                          <div class="row">
+                            <label for="achievementto-${n}" id="achievement-to-label-${n}" class="label-max">End date</label>
+                            <input type="month" name="achievementto-${n}" id="achievementto-${n}">
+                          </div>
+                          <div class="row">
+                            <input type="file" name="achievementcertificate-${n}" accept=".pdf" id="achievementcertificate-${n}" onchange="selectedImageOrPdf(this,'view-achievementcertificate-${n}',10);">
+                            <div class="file" id="view-achievementcertificate-${n}">
+                              <div class="desc">Certificate</div>
+                              <div class="button" onclick="selectFile('achievementcertificate-${n}');" tabindex="1">Select</div>
+                            </div>
+                          </div>
+                        </div>
+                      `;
+                      return wrapper.children[0];
+                    }
+                  </script>
+                </div>
+                <div class="row">
+                  <div class="message" id="message-box-10"></div>
+                </div>
+                <div class="row">
+                  <button type="button" class="b-yellow b-skinny b-thin add-another" onclick="addAnotherForm(this,'achievement');" data-multiple="0" id="achievement-adder"> Another</button>
+                  <button type="button" class="b-green b-medium" onclick="toEleventhPage();" id="box-10-next">Next</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="box">
+            <a class="a-box" id="box-11"></a>
+            <div class="fit">
+              <div class="info">
+                <div class="cen">
+                  <div class="image">
+                    <div class="preview">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    </div>
+                  </div>
+                  <div class="text">Complete Profile by adding your skills (Add atleast 5), use comma to seperate keywords if you want to insert multiple keywords at once.</div>
+                </div>
+              </div>
+              <div class="tab">
+                <div class="row">
+                  <div class="title">Skills</div>
+                </div>
+                <div class="row hidden">
+                  <input type="text" class="hidden" id="skills" name="skills">
+                </div>
+                <div class="row">
+                  <div class="skill-view" id="skill-view" placeholder="Add atleast 5 Skills"></div>
+                </div>
+                <div class="row row-fit">
+                  <input type="text" id="skill-text" placeholder="Keyword">
+                  <button type="button" class="b-blue b-medium" onclick="addSkill();">Add</button>
+                </div>
+                <div class="row">
+                  <div class="message" id="message-box-11"></div>
+                </div>
+                <div class="row">
+                  <button type="button" class="b-green b-medium" onclick="toTwelvethPage();" id="box-11-next">Next</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="box">
+            <a class="a-box" id="box-12"></a>
+            <div class="fit">
+              <div class="info">
+                <div class="cen">
+                  <div class="image">
+                    <div class="preview">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 16 12 12 8 16"></polyline><line x1="12" y1="12" x2="12" y2="21"></line><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path><polyline points="16 16 12 12 8 16"></polyline></svg>
+                    </div>
+                  </div>
+                  <div class="text">Click Submit to save the data. Note that none of the previously entered data will not be saved until you click save.</div>
+                </div>
+              </div>
+              <div class="tab">
+                <div class="row">
+                  <div class="title">Final Submit</div>
+                </div>
+                <div class="row" id="loader">
+                  <%
+                    if(submited!=false)
+                    {
+                      if(submited.type=="error")
+                      {
+                        %>
+                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d50000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                        <%
+                      }
+                      else
+                      {
+                        %>
+                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FF9800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                        <%
+                      }
+                    }
+                  %>
+                </div>
+                <div class="row">
+                  <div class="message" id="message-box-12"></div>
+                </div>
+                <div class="row">
+                  <button type="submit" class="b-green b-medium" onclick="return finalSubmit(event);" id="box-12-next">Submit</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+    <script>
+      window.location.hash="#box-<%-verified?2:1%>";
+      <%
+        if((submited!=false) && submited.type!="success")
+        {
+          %>
+            console.error(`<%-submited.devlog%>`);
+            showPopUp(`<%-submited.type%>`,`<%-submited.message%>`);
+          <%
+        }
+      %>
+    </script>
+  </body>
+</html>

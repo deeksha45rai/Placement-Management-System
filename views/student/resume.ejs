@@ -1,0 +1,43 @@
+<% var theme = ["green", "blue", "lightblue", "yellow", "pink", "darkgreen"];
+var month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep",
+  "Oct", "Nov", "Dec"
+];
+function showDate(date) {
+  var d = date.split("-");
+  return `${d[0]}&nbsp;-&nbsp;${month[parseInt(d[1]) - 1]}`;
+}
+%>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <title>Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="<%-path%>../../static/style/student/resume.css" />
+  <link rel="stylesheet" href="<%-path%>../../static/style/default-values.css" />
+  <script src="<%-path%>../../static/script/student/resume.js"></script>
+</head>
+<body class="<%-theme[Math.floor(Math.random() * theme.length)]; %>">
+  <div class="block hvcenter">
+    <img class="pic" src="<%-path%>../../data/profilepic/<%=data.email%>.<%-data.pic_ext%>" />
+  </div>
+  <div class="block flex-block">
+    <% if (data && data.data && data.data.name) { %>
+      <div class="row huge"><%-data.data.name%></div>
+      <div class="row"><%-data.data.about%></div>
+      <div class="row"><%-data.data.gender%></div>
+      <div class="row">Age : <%-parseInt((new Date() - new Date(data.data.dob)) / (1000 * 60 * 60 * 24 * 365))%></div>
+    <% } else { %>
+      <div class="row">Error: Data not available</div>
+    <% } %>
+  </div>
+  <div class="block flex-block">
+    <% if (data && data.email) { %>
+      <div class="row email"><%-data.email%></div>
+    <% } else { %>
+      <div class="row">Error: Email not provided</div>
+    <% } %>
+    <!-- Other content -->
+  </div>
+</body>
+</html>

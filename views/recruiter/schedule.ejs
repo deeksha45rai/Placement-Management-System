@@ -1,0 +1,75 @@
+<%
+  var d=new Date(closingDate);
+  var mindate=`${d.getFullYear().toString().padStart(4,0)}-${(d.getMonth()+1).toString().padStart(2,0)}-${d.getDate().toString().padStart(2,0)}`;
+  if(jobPosted)
+  {
+    %>
+      <div class="dashboard second-dashboard inverse">
+        <div class="small-container full-wrap fit-full-wrap">
+          <form action="" method="POST" id="schedule-job-post" onsubmit="return scheduleJobPost(event);">
+            <%
+              if(recruiteraccepted && adminaccepted)
+              {
+                %>
+                <div class="row">
+                  <div class="title">Scheduled on <%-scheduleDate%></div>
+                </div>
+                <%
+              }
+              else
+              {
+                var title=recruiteraccepted?"Reschedule":"Schedule";
+                <!-- var requestType=(adminaccepted && (!recruiteraccepted))?"accept":"request"; -->
+                if(scheduleDate!="")
+                {
+                  %>
+                    <div class="row">
+                      <div class="small-title">Requested for <%-new Date(scheduleDate).toString().split(" ").splice(0,4).join(" ")%></div>
+                    </div>
+                  <%
+                }
+                %>
+                  <div class="row">
+                    <div class="title"><%-title%></div>
+                  </div>
+                  <div class="row">
+                    <label for="job-schedule-date"><%-title%> Date</label>
+                    <input type="date" name="job-schedule-date" id="job-schedule-date" min="<%=mindate%>" required>
+                  </div>
+                  <div class="row">
+                    <div class="message" id="schedule-message"></div>
+                  </div>
+                  <div class="row">
+                    <button type="button" id="schedule-job-post-button" class="submit" onclick="scheduleJobPost(event);">
+                      <span>Submit</span>
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg>
+                    </button>
+                  </div>
+                <%
+              }
+            %>
+          </form>
+        </div>
+        <div class="wide g-bg">
+
+        </div>
+      </div>
+    <%
+  }
+  else
+  {
+    %>
+      <div class="dashboard second-dashboard inverse">
+        <div class="small-container full-wrap fit-full-wrap already-job-posted-wrap">
+          <div class="ufo-image"></div>
+          <div class="row">
+            <div class="title">You have not posted any JOBs</div>
+          </div>
+        </div>
+        <div class="wide already-job-posted-image">
+
+        </div>
+      </div>
+    <%
+  }
+%>

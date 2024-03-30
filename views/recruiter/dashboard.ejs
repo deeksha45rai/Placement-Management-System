@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <title>Dashboard</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#212121">
+
+    <link rel="stylesheet" type="text/css" href="../../static/style/recruiter/style.css">
+    <link rel="stylesheet" type="text/css" href="../../static/style/popup.css">
+    <script src="../../static/script/recruiter/script.js"></script>
+    <script src="../../static/script/popup.js"></script>
+  </head>
+  <body>
+    <div class="main" id="main">
+      <div class="top">
+        <div class="titlebar">
+          <div class="titleleft" onclick="window.location='/home';">
+            <div class="icon"></div>
+            <div class="title">Placement Prediction & Management System</div>
+          </div>
+          <div class="titleright">
+            <div class="title"><%-email%></div>
+          </div>
+        </div>
+        <div class="nav" id="nav" data-user="<%-usertype%>">
+          <!-- Rest of the URL is in the Script -->
+          <div class="nav-option nav-option-active" toURL="main"><span>Dashboard</span></div>
+          <%
+            if(usertype=="recruiter")
+            {
+              %>
+                <!-- <div class="nav-option" id="profile" toURL="profile"><span>Profile</span></div> -->
+                <div class="nav-option" id="job" toURL="job"><span>Job</span></div>
+                <div class="nav-option" id="schedule" toURL="schedule"><span>Schedule</span></div>
+                <!-- <div class="nav-option" id="mcq" toURL="mcq"><span>MCQ</span></div> -->
+                <div class="nav-option" id="students" toURL="students"><span>Students</span></div>
+              <%
+            }
+            else if(usertype=="admin")
+            {
+              %>
+                <div class="nav-option" id="add-company" toURL="add-company"><span>Add Company</span></div>
+                <div class="nav-option" id="add-department" toURL="add-department"><span>Add Department</span></div>
+                <div class="nav-option" id="add-course" toURL="add-course"><span>Add Course</span></div>
+                <div class="nav-option" id="schedule" toURL="schedule"><span>Schedule</span></div>
+                <div class="nav-option" id="add-coordinator" toURL="add-coordinator"><span>Add Coordinator</span></div>
+                <div class="nav-option" id="dump-data" toURL="dump-data"><span>Dump Data</span></div>
+              <%
+            }
+          %>
+          <div class="nav-option" id="logout" onclick="window.location='/logout';"><span>Logout</span></div>
+        </div>
+      </div>
+      <div class="bottom" id="maincontainer">
+
+      </div>
+    </div>
+  </body>
+</html>

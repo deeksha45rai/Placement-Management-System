@@ -1,0 +1,166 @@
+<div class="layout dashboard">
+  <div class="item wide horizontallist">
+    <div class="card no-pad">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+      <div class="first">Top Jobs</div>
+    </div>
+    <%
+      companies.forEach(company=>{
+        %>
+          <div class="card">
+            <div class="website" link="<%-company.data.website%>">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+            </div>
+            <div class="name"><%-company.data.name%></div>
+            <div class="type"><%-company.data.job.type%></div>
+            <div class="title"><%-company.data.job.title%></div>
+            <div class="row">
+              <div class="obj">Salary</div>
+              <div class="obj">:</div>
+              <div class="salary"><%-company.data.job.salary%></div>
+            </div>
+            <div class="row">
+              <div class="obj">Vacancy</div>
+              <div class="obj">:</div>
+              <div class="vacancy"><%-company.data.job.vacancy%></div>
+            </div>
+          </div>
+        <%
+      });
+    %>
+  </div>
+  <div class="item tall">
+    <canvas id="graph3"></canvas>
+    <div class="hidden" id="graphData2"><%-JSON.stringify(statistics);%></div>
+  </div>
+  <div class="item normal">
+    <canvas id="graph"></canvas>
+    <div class="hidden" id="graphData"><%-JSON.stringify(department);%></div>
+  </div>
+  <div class="item normal special item-link" loadtab="prediction">
+    <div class="fullwrapper">
+      <div class="titlewrapper">
+        <div class="iconic">
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+        </div>
+        <div class="title">Campus Placement Prediction</div>
+      </div>
+      <div class="contents">
+        <div class="content">Check whether you get placed or not.</div>
+        <div class="content">Only you can see the results.</div>
+      </div>
+    </div>
+  </div>
+  <div class="item huge">
+    <canvas id="graph2"></canvas>
+  </div>
+  <div class="item normal item-link" loadtab="drive">
+    <div class="fullwrapper inversefullwrapper">
+      <div class="titlewrapper">
+        <div class="iconic">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="12" x2="2" y2="12"></line><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path><line x1="6" y1="16" x2="6.01" y2="16"></line><line x1="10" y1="16" x2="10.01" y2="16"></line></svg>
+        </div>
+        <div class="title">Apply for Job</div>
+      </div>
+      <div class="contents">
+        <div class="content">Search and apply for jobs</div>
+        <div class="content">Attend tests to get selected.</div>
+      </div>
+    </div>
+  </div>
+  <div class="item normal verticallist">
+    <%
+      if(messages.length>0)
+      {
+        messages.forEach(message=>{
+          %>
+            <div class="card">
+              <div class="title"><%-message.title%></div>
+              <div class="subtitle"><%-message.message%></div>
+            </div>
+          <%
+        });
+      }
+      else
+      {
+        %>
+          <div class="card">
+            <div class="title">Notification</div>
+            <div class="subtitle">Your Notifications will appear here.</div>
+          </div>
+          <div class="card">
+            <div class="title">System</div>
+            <div class="subtitle">You have no notifications until now. You will receive notifications when you get Selected in a Placement.</div>
+          </div>
+        <%
+      }
+    %>
+  </div>
+  <div class="item normal item-link" loadtab="training-resources">
+    <div class="fullwrapper inversefullwrapper">
+      <div class="titlewrapper">
+        <div class="iconic">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+        </div>
+        <div class="title">Training Resources</div>
+      </div>
+      <div class="contents">
+        <div class="content">Access study materials</div>
+        <div class="content">Prepare for the Placement Drive.</div>
+      </div>
+    </div>
+  </div>
+  <div class="item wide horizontallist">
+    <div class="card no-pad">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+      <div class="first">Coordinators</div>
+    </div>
+    <%
+      coordinators.forEach(coordinator=>{
+        %>
+          <div class="card no-pad">
+            <img src="../../data/profilepic/<%-coordinator.email%>.<%-coordinator.pic_ext%>" alt="">
+            <div class="name"><%-coordinator.data.name%></div>
+            <div class="type"><%-coordinator.data.about%></div>
+            <div class="title"><%-coordinator.data.admission.course%></div>
+          </div>
+        <%
+      });
+    %>
+  </div>
+  <div class="item wide profile item-link" onclick="openInNewTab('./profile/view');">
+    <div class="picwrapper">
+      <img class="pic" src="<%-profilepic%>">
+      <div class="overlay">
+        <div class="editwrapper">
+          <div class="icon"></div>
+          <div class="title">Edit</div>
+        </div>
+      </div>
+    </div>
+    <div class="details">
+      <div class="wrapper">
+        <div class="name"><%-name%></div>
+        <div class="course"><%-course%></div>
+        <div class="email"><%-email%></div>
+        <div class="phone"><%-phone%></div>
+        <div class="bio"><%-about%></div>
+      </div>
+    </div>
+    <div class="edit"></div>
+  </div>
+  <div class="item normal special item-link" loadtab="recommendation">
+    <div class="fullwrapper">
+      <div class="titlewrapper">
+        <div class="iconic">
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="7.5 4.21 12 6.81 16.5 4.21"></polyline><polyline points="7.5 19.79 7.5 14.6 3 12"></polyline><polyline points="21 12 16.5 14.6 16.5 19.79"></polyline><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+        </div>
+        <div class="title">Skill Recommendation</div>
+      </div>
+      <div class="contents">
+        <div class="content">Get Personalized Skill Recommendation.</div>
+        <div class="content">Only you can see the results.</div>
+      </div>
+    </div>
+  </div>
+</div>
