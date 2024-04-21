@@ -12,68 +12,68 @@ coordinator.get("/", (req, res) => {
  * Rahul,  30/12/2020
  */
 
-//Coordinator Home is Student Dashboard
-// coordinator.get("/dashboard",(req,res)=>{
-//   res.render("coordinator/coordinator");
-// });
+// Coordinator Home is Student Dashboard
+coordinator.get("/dashboard",(req,res)=>{
+  res.render("coordinator/coordinator");
+});
 
-// //Send Messages / Mail / Notification
-// coordinator.get("/message/add",(req,res)=>{
-//   res.render("coordinator/send-messages");
-// });
+//Send Messages / Mail / Notification
+coordinator.get("/message/add",(req,res)=>{
+  res.render("coordinator/send-messages");
+});
 
-// //Add example MCQ
-// coordinator.get("/practice/mcq/add",(req,res)=>{
-//   res.render("coordinator/add-mcq");
-// });
+//Add example MCQ
+coordinator.get("/practice/mcq/add",(req,res)=>{
+  res.render("coordinator/add-mcq");
+});
 
-// //Add statistics (eg: Externally placed student data)
-// coordinator.get("/statistics/add",(req,res)=>{
-//   res.render("coordinator/add-statistics");
-// });
+//Add statistics (eg: Externally placed student data)
+coordinator.get("/statistics/add",(req,res)=>{
+  res.render("coordinator/add-statistics");
+});
 
-// //Schedule Interview, Training Sessions
-// coordinator.get("/schedule",(req,res)=>{
-//   res.render("coordinator/schedule");
-// });
+//Schedule Interview, Training Sessions
+coordinator.get("/schedule",(req,res)=>{
+  res.render("coordinator/schedule");
+});
 
-// //Alumni data
-// coordinator.get("/alumni",(req,res)=>{
-//   res.render("alumni");
-// });
+//Alumni data
+coordinator.get("/alumni",(req,res)=>{
+  res.render("alumni");
+});
 
-// //All Courses
-// coordinator.get("/course",(req,res)=>{
-//   res.render("coordinator/courses");
-// });
+//All Courses
+coordinator.get("/course",(req,res)=>{
+  res.render("coordinator/courses");
+});
 
-// //View specific Course
-// coordinator.get("/course/:department/:semester/:course",(req,res)=>{
-//   var department=process.params.department;
-//   var semester=process.params.semester;
-//   var course=process.params.course;
-//   res.render("coordinator/view-course",{
-//     department,
-//     semester,
-//     course
-//   });
-// });
+//View specific Course
+coordinator.get("/course/:department/:semester/:course",(req,res)=>{
+  var department=process.params.department;
+  var semester=process.params.semester;
+  var course=process.params.course;
+  res.render("coordinator/view-course",{
+    department,
+    semester,
+    course
+  });
+});
 
-// //Edit Course
-// coordinator.get("/course/:department/:semester/:course/edit",(req,res)=>{
-//   var department=process.params.department;
-//   var semester=process.params.semester;
-//   var course=process.params.course;
-//   res.render("coordinator/edit-course",{
-//     department,
-//     semester,
-//     course
-//   });
-// });
+//Edit Course
+coordinator.get("/course/:department/:semester/:course/edit",(req,res)=>{
+  var department=process.params.department;
+  var semester=process.params.semester;
+  var course=process.params.course;
+  res.render("coordinator/edit-course",{
+    department,
+    semester,
+    course
+  });
+});
 
-// //View Help/Messages by Student
-// coordinator.get("/messages/",(req,res)=>{
-//   res.render("coordinator/messages");
-// });
+// View Help/Messages by Student
+coordinator.get("/messages/",(req,res)=>{
+  res.render("coordinator/messages");
+});
 
 module.exports = coordinator;

@@ -1,6 +1,11 @@
-<% // default app version var version=version==undefined?"1.0.0":version; //
+<!-- <% // default app version var version=version==undefined?"1.0.0":version; //
 default open tab var tab=tab==undefined?"main":tab; // default user type var
-usertype=usertype==undefined?"guest":usertype; %>
+usertype=usertype==undefined?"guest":usertype; %> -->
+
+<% var version =  "1.0.0";%>
+<%var tab = "main";%>
+<%var usertype ="guest";%>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -32,7 +37,7 @@ usertype=usertype==undefined?"guest":usertype; %>
       <div
         class="searchcontainer"
         id="searchcontainer"
-        usertype="<%=usertype%>"
+        usertype="<%-usertype%>"
       >
         <input
           class="search"
@@ -47,7 +52,7 @@ usertype=usertype==undefined?"guest":usertype; %>
         <div class="wrapper">
           <div class="title">
             <div class="name">PPMS</div>
-            <div class="version"><%=version%></div>
+            <div class="version"><%-version%></div>
           </div>
           <div class="subtitle">
             Campus Placement Prediction &amp; Management System
@@ -58,7 +63,7 @@ usertype=usertype==undefined?"guest":usertype; %>
     <div class="container">
       <div class="options" id="options"></div>
       <div class="contents">
-        <div class="body" id="body" openTab="<%=tab%>">
+        <div class="body" id="body" openTab="<%-tab%>">
           <!-- Contents will be dynamically loaded -->
           <div class="loading"></div>
           <!-- Contents will be dynamically loaded -->
@@ -294,8 +299,8 @@ usertype=usertype==undefined?"guest":usertype; %>
               <div class="subtitle">Training resources</div>
             </div>
           </div>
-          <% if(usertype=="coordinator") { %>
-          <!-- <div class="option" loadtab="">
+          <!-- <% if(usertype=="coordinator") { %>
+          <div class="option" loadtab="">
                   <div class="icon">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                   </div>
@@ -303,8 +308,8 @@ usertype=usertype==undefined?"guest":usertype; %>
                     <div class="title">Schedule</div>
                     <div class="subtitle">Schedule an Event</div>
                   </div>
-                </div> -->
-          <% } %>
+                </div>
+          <% } %> -->
           <div class="option" onclick="logout(event);">
             <div class="icon">
               <svg

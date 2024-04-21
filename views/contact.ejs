@@ -33,10 +33,13 @@
                 name="email"
                 id="email"
                 placeholder="E-Mail"
-                <%if(email!=""
-                ){%
-              />readonly="true" value="<%-email%>"<%}%> required>
+                <% if (email !== "") { %>
+                  readonly="true" value="<%- email %>"
+                <% } %>
+                required
+              >
             </div>
+            
             <div class="input-container focus">
               <label for="type">Type</label>
               <select name="type" id="type" onchange="this.blur();" required>

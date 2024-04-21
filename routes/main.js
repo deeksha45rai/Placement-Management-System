@@ -96,12 +96,14 @@ route.get("/register", async (req, res) => {
 route.post("/login", (req, res) => {
     var parseError = false;
     var data = {}; //response data
-    var userCreadentials;
+    var userCredentials;
     try {
         userCredentials = Buffer.from(req.body.raw, "base64").toString(
             "binary"
+
         );
         userCredentials = JSON.parse(userCredentials);
+        
     } catch (
         error //Parse Error
     ) {
@@ -139,6 +141,7 @@ route.post("/login", (req, res) => {
                             ) {
                                 data.redirect = "student/profile/new"; //If (student/coordinator) profile not complete
                             } else if (result.type == "coordinator") {
+                                
                                 data.redirect = `/student/dashboard`; //coordinator is also student
                             } else {
                                 data.redirect = `/${result.type}/dashboard`;

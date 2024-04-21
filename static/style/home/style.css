@@ -75,6 +75,14 @@ body::-webkit-scrollbar-thumb:hover {
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
     width: 60%;
 }
+
+.title-aboutwebsite{
+   text-align: center;
+    margin:2%;
+    font-size: 2vw;
+    
+
+}
 @media (max-width: 1000px) {
     .background {
         max-width: 90vmin;

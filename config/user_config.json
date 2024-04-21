@@ -5,8 +5,8 @@
     "MAIL": {
         "SERVICE": "gmail",
         "HOST": "smtp.gmail.com",
-        "MAIL": "Your_email",
-        "PASSWORD": "yur_password",
+        "MAIL": "Email",
+        "PASSWORD": "yur_pass",
         "PORT": 465,
         "SECURE": true
     },

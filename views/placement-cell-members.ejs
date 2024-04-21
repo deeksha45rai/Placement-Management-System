@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8" />
@@ -7,11 +7,11 @@
     <link rel="stylesheet" href="../static/style/home/team.css" />
     <title>Coordinators</title>
   </head>
-  <body>
+  <body> -->
     <!--Navigation Bar Start-->
-    <%- include("partials/nav.ejs",{ isLoggedIn, type }); %>
+    <!-- <%- include("partials/nav.ejs",{ isLoggedIn, type }); %> -->
     <!--Navigation Bar End-->
-    <div class="container">
+    <!-- <div class="container">
       <div class="wrap">
         <% if(coordinators.length>0) { coordinators.forEach(coordinator=>{ %>
         <div class="card">
@@ -31,4 +31,60 @@
       </div>
     </div>
   </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../static/style/nav.css" />
+    <link rel="stylesheet" href="../static/style/home/team.css" />
+    <title>Coordinators</title>
+  </head>
+  <body>
+    <!--Navigation Bar Start-->
+    <%- include("partials/nav.ejs",{ isLoggedIn, type }); %>
+    <!--Navigation Bar End-->
+    <div class="container">
+      <div class="wrap">
+        <% if(coordinators.length > 0) { %>
+        <% coordinators.forEach(coordinator => { %>
+        <div class="card">
+          <img src="../../data/profilepic/<%- coordinator.email %>.<%- coordinator.pic_ext %>" alt="" />
+          <div class="name"><%- coordinator.data.name %></div>
+          <div class="type"><%- coordinator.data.about %></div>
+          <div class="title"><%- coordinator.data.admission.course %></div>
+        </div>
+        <% }); %>
+        <% } else { %>
+        <div class="card">
+          <img src="../../data/profilepic/default.jpg" alt="" />
+          <div class="name">Dr. Rakesh Srivastava</div>
+          <div class="type">Dean – Training & Placement</div>
+          <div class="title">E-mail: tpo@akgec.ac.in</div>
+        </div>
+        <div class="card">
+          <img src="../../data/profilepic/default.jpg" alt="" />
+          <div class="name">Default Coordinator 2</div>
+          <div class="type">Default Coordinator Description 2</div>
+          <div class="title">Default Course 2</div>
+        </div>
+        <div class="card">
+          <img src="../../data/profilepic/default.jpg" alt="" />
+          <div class="name">Default Coordinator 2</div>
+          <div class="type">Default Coordinator Description 2</div>
+          <div class="title">Default Course 2</div>
+        </div>
+        <div class="card">
+          <img src="../../data/profilepic/default.jpg" alt="" />
+          <div class="name">Default Coordinator 2</div>
+          <div class="type">Default Coordinator Description 2</div>
+          <div class="title">Default Course 2</div>
+        </div>
+        <% } %>
+      </div>
+    </div>
+  </body>
 </html>
+

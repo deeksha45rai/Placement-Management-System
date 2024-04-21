@@ -254,15 +254,46 @@
                   <div class="title">Course</div>
                 </div>
                 <div class="row">
-                  <select name="course" id="course" onchange="setUpSemester();this.blur();">
-                    <option disabled selected value> -- Current Course -- </option>
-                  </select>
-                </div>
-                <div class="row">
-                  <select name="semester" id="semester" onchange="this.blur();">
-                    <option disabled selected value> -- Current Semester -- </option>
-                  </select>
-                </div>
+  <select name="course" id="course" onchange="setUpSemester();">
+    <option disabled selected value> -- Current Course -- </option>
+    <option value="course1">Course 1</option>
+    <option value="course2">Course 2</option>
+    <!-- Add more course options as needed -->
+  </select>
+</div>
+
+<div class="row">
+  <select name="semester" id="semester">
+    <option disabled selected value> -- Current Semester -- </option>
+  </select>
+</div>
+
+<script>
+  function setUpSemester() {
+    // Get the selected course
+    var selectedCourse = document.getElementById("course").value;
+    var semesterDropdown = document.getElementById("semester");
+
+    // Clear existing options
+    semesterDropdown.innerHTML = '<option disabled selected value> -- Current Semester -- </option>';
+
+    // Add semester options based on the selected course
+    if (selectedCourse === "course1") {
+      // Add options for Course 1 semesters
+      semesterDropdown.innerHTML += '<option value="semester1">Semester 1</option>';
+      semesterDropdown.innerHTML += '<option value="semester2">Semester 2</option>';
+    } else if (selectedCourse === "course2") {
+      // Add options for Course 2 semesters
+      semesterDropdown.innerHTML += '<option value="semester3">Semester 3</option>';
+      semesterDropdown.innerHTML += '<option value="semester4">Semester 4</option>';
+    }
+    // Add more conditions as needed for other courses
+
+    // Optional: You can trigger blur after updating options to remove focus
+    semesterDropdown.blur();
+  }
+</script>
+
                 <div class="row">
                   <input type="number" name="arrears" id="arrears" placeholder="Active Arrears" min=0>
                 </div>
@@ -692,16 +723,16 @@
       </div>
     </div>
     <script>
-      window.location.hash="#box-<%-verified?2:1%>";
-      <%
-        if((submited!=false) && submited.type!="success")
-        {
-          %>
-            console.error(`<%-submited.devlog%>`);
-            showPopUp(`<%-submited.type%>`,`<%-submited.message%>`);
-          <%
-        }
-      %>
+      window.location.hash = "#box-<%= verified ? 2 : 1 %>";
+
+       if (submited && submited.type && submited.type !== "success") {
+
+  console.error(`<%-submited.devlog%>`);
+  showPopUp(`<%-submited.type%>`,`<%-submited.message%>`);
+
+}
+
+
     </script>
   </body>
 </html>
